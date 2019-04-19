@@ -40,6 +40,7 @@ namespace CKDataViewer
 
             this.Width = (int)(Screen.PrimaryScreen.Bounds.Width / 1.2);
             this.Height = (int)(Screen.PrimaryScreen.Bounds.Height / 1.2);
+            itemSelectionPanel.MinimumSize = new Size(this.Width / 6, itemSelectionPanel.MinimumSize.Height);
 
             frmSettings settingsLoader = new frmSettings();
             if (settingsLoader.ShowDialog() != DialogResult.OK)
