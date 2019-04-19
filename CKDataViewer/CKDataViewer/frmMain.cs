@@ -28,6 +28,12 @@ namespace CKDataViewer
 
         private DispatcherTimer refreshTimer = new DispatcherTimer();
 
+        private readonly DateTime programLaunchTime;
+        private static readonly int DATA_CONTAINER_SIZE = 100;
+        private static readonly int CONSTRAINED_CHART_SIZE = DATA_CONTAINER_SIZE / 2;
+
+        private TimeoutTimer resyncTimer = new TimeoutTimer(5);
+
         public frmMain()
         {
             InitializeComponent();
@@ -45,7 +51,7 @@ namespace CKDataViewer
             oscReceiver.DoWork += oscReceiverWorker_DoWork;
             oscReceiver.RunWorkerCompleted += oscReceiverWorker_RunWorkerCompleted;
 
-            dataContainerDictionary = new DataContainerDictionary(100);
+            dataContainerDictionary = new DataContainerDictionary(DATA_CONTAINER_SIZE);
             dataContainerDictionary.ItemAdded += DataContainerDictionary_ItemAdded;
             dataContainerDictionary.ItemRemoved += DataContainerDictionary_ItemRemoved;
 
@@ -57,10 +63,13 @@ namespace CKDataViewer
             dataChart.ChartAreas.Clear();
             dataChart.Legends.Clear();
 
-            dataChart.Titles.Add("Realtime Data");
-            dataChart.ChartAreas.Add(new ChartArea("Realtime Data"));
+            dataChart.Titles.Add("Robot Data");
+            dataChart.ChartAreas.Add(new ChartArea("Robot Data"));
+            dataChart.ChartAreas[0].AxisX.Title = "Time";
             dataChart.Legends.Add(new Legend("Legend"));
             dataChart.Legends[0].Title = "Legend";
+
+            programLaunchTime = DateTime.Now;
         }
 
         private void DataContainerDictionary_ItemRemoved(object sender, EventArgs e)
@@ -95,13 +104,17 @@ namespace CKDataViewer
             });
         }
 
-        private ElapsedTimer eTimer = new ElapsedTimer();
+#if DEBUG
+        private ElapsedTimer refreshETimer = new ElapsedTimer();
+#endif
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
-            eTimer.start();
+#if DEBUG
+            refreshETimer.start();
+#endif
 
-            double timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            double timestamp = (DateTime.Now - programLaunchTime).TotalSeconds;
 
             itemSelectionPanel.Invoke((MethodInvoker)delegate () {
                 lock (dictionarySyncLock)
@@ -136,7 +149,7 @@ namespace CKDataViewer
                                     dataChart.Series[currIdx].Name = x.Key;
                                     dataChart.Series[currIdx].ChartType = SeriesChartType.FastLine;
                                     dataChart.Series[currIdx].Points.AddXY(timestamp, ParseValue(x.Value.LatestValue));
-                                    while (dataChart.Series[currIdx].Points.Count > dataContainerDictionary.MaxNumValues / 2)
+                                    while (dataChart.Series[currIdx].Points.Count > CONSTRAINED_CHART_SIZE)
                                     {
                                         dataChart.Series[currIdx].Points.RemoveAt(0);
                                     }
@@ -152,10 +165,12 @@ namespace CKDataViewer
                 }
             });
 
-            Console.WriteLine("ElapsedTime:" + eTimer.hasElapsed());
+#if DEBUG
+            Console.WriteLine("ElapsedRefreshTime:" + refreshETimer.hasElapsed());
+#endif
         }
 
-        private string FormatValue(string value)
+        private static string FormatValue(string value)
         {
             double tryDouble;
             if (Double.TryParse(value, out tryDouble))
@@ -167,7 +182,7 @@ namespace CKDataViewer
             return value;
         }
 
-        private double ParseValue(string value)
+        private static double ParseValue(string value)
         {
             double tryDouble;
             if (Double.TryParse(value, out tryDouble))
@@ -234,7 +249,12 @@ namespace CKDataViewer
 
                                     lock(dictionarySyncLock)
                                     {
-                                        dataContainerDictionary.Add(dataList);
+                                        if (resyncTimer.isTimedOut()) {
+                                            dataContainerDictionary.Add(dataList, true);
+                                            resyncTimer.reset();
+                                        } else {
+                                            dataContainerDictionary.Add(dataList);
+                                        }
                                     }
                                 }
                                 catch (Exception) { }
@@ -284,6 +304,22 @@ namespace CKDataViewer
             {
                 l.DisableChart();
             }
+        }
+
+        private void CmdSaveImage_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "JPEG File (*.jpg) | *.jpg | PNG File (*.png) | *.png",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            };
+
+            refreshTimer.Stop();
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+                dataChart.SaveImage(sfd.FileName, (ChartImageFormat) sfd.FilterIndex);
+
+            refreshTimer.Start();
         }
     }
 }

@@ -51,14 +51,14 @@
             this.tableLayoutPanel1.Controls.Add(this.txtIPAddress, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.numPort, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(766, 216);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 278);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -77,7 +77,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(13, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 139);
+            this.label2.Size = new System.Drawing.Size(122, 201);
             this.label2.TabIndex = 1;
             this.label2.Text = "Port:";
             // 
@@ -86,7 +86,7 @@
             this.txtIPAddress.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtIPAddress.Location = new System.Drawing.Point(141, 13);
             this.txtIPAddress.Name = "txtIPAddress";
-            this.txtIPAddress.Size = new System.Drawing.Size(612, 31);
+            this.txtIPAddress.Size = new System.Drawing.Size(646, 31);
             this.txtIPAddress.TabIndex = 0;
             // 
             // numPort
@@ -104,7 +104,7 @@
             0,
             0});
             this.numPort.Name = "numPort";
-            this.numPort.Size = new System.Drawing.Size(612, 31);
+            this.numPort.Size = new System.Drawing.Size(646, 31);
             this.numPort.TabIndex = 2;
             this.numPort.Value = new decimal(new int[] {
             5800,
@@ -120,11 +120,11 @@
             this.tableLayoutPanel2.Controls.Add(this.cmdCancel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.cmdOk, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 116);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(10, 188);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(766, 100);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(800, 100);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // cmdCancel
@@ -133,7 +133,7 @@
             this.cmdCancel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmdCancel.Location = new System.Drawing.Point(3, 3);
             this.cmdCancel.Name = "cmdCancel";
-            this.cmdCancel.Size = new System.Drawing.Size(377, 94);
+            this.cmdCancel.Size = new System.Drawing.Size(394, 94);
             this.cmdCancel.TabIndex = 2;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
@@ -142,9 +142,9 @@
             // cmdOk
             // 
             this.cmdOk.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cmdOk.Location = new System.Drawing.Point(386, 3);
+            this.cmdOk.Location = new System.Drawing.Point(403, 3);
             this.cmdOk.Name = "cmdOk";
-            this.cmdOk.Size = new System.Drawing.Size(377, 94);
+            this.cmdOk.Size = new System.Drawing.Size(394, 94);
             this.cmdOk.TabIndex = 3;
             this.cmdOk.Text = "Okay";
             this.cmdOk.UseVisualStyleBackColor = true;
@@ -153,13 +153,20 @@
             // frmSettings
             // 
             this.AcceptButton = this.cmdOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSize = true;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(766, 216);
+            this.ClientSize = new System.Drawing.Size(820, 298);
+            this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmSettings";
+            this.Padding = new System.Windows.Forms.Padding(10);
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings...";
             this.TopMost = true;
