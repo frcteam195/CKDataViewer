@@ -224,7 +224,7 @@ namespace CKDataViewer
         {
             UDPSender udpSender = null;
             bool reinit = true;
-            var message = new OscMessage("/RegisterRequestor");
+            var heartbeatMsg = new OscMessage("/RegisterRequestor");
 
             while (runThread)
             {
@@ -243,7 +243,7 @@ namespace CKDataViewer
                         }
                     }
 
-                    udpSender.Send(message);
+                    udpSender.Send(heartbeatMsg);
 
                     Thread.Sleep(1000);
                 }
