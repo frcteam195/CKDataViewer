@@ -21,6 +21,7 @@ namespace CKDataViewer
         private readonly string ROBOT_IP;
 
         private BackgroundWorker oscReceiver = new BackgroundWorker();
+        private BackgroundWorker oscSender = new BackgroundWorker();
         private bool runThread = true;
 
         private object dictionarySyncLock = new object();
@@ -51,6 +52,9 @@ namespace CKDataViewer
 
             oscReceiver.DoWork += oscReceiverWorker_DoWork;
             oscReceiver.RunWorkerCompleted += oscReceiverWorker_RunWorkerCompleted;
+
+            oscSender.DoWork += oscSenderWorker_DoWork;
+            oscSender.RunWorkerCompleted += oscSenderWorker_RunWorkerCompleted;
 
             dataContainerDictionary = new DataContainerDictionary(DATA_CONTAINER_SIZE);
             dataContainerDictionary.ItemAdded += DataContainerDictionary_ItemAdded;
@@ -192,6 +196,11 @@ namespace CKDataViewer
                 return 0;
         }
 
+        private void oscSenderWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //exitTriggered(1);
+        }
+
         private void oscReceiverWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             exitTriggered(1);
@@ -209,6 +218,51 @@ namespace CKDataViewer
             }
 
             Environment.Exit(exitCode);
+        }
+
+        private void oscSenderWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            UDPSender udpSender = null;
+            bool reinit = true;
+            var message = new OscMessage("/RegisterRequestor");
+
+            while (runThread)
+            {
+                try
+                {
+                    if (udpSender == null || reinit)
+                    {
+                        try
+                        {
+                            udpSender = new UDPSender(ROBOT_IP, PORT);
+                            reinit = false;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Couldn't create udp listener");
+                        }
+                    }
+
+                    udpSender.Send(message);
+
+                    Thread.Sleep(1000);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    try
+                    {
+                        udpSender.Close();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    reinit = true;
+                }
+            }
+
+            udpSender.Close();
         }
 
         private void oscReceiverWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -296,6 +350,7 @@ namespace CKDataViewer
         private void FrmMain_Load(object sender, EventArgs e)
         {
             oscReceiver.RunWorkerAsync();
+            oscSender.RunWorkerAsync();
             refreshTimer.Start();
         }
 
