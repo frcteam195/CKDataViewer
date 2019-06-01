@@ -121,4 +121,7 @@
     <Content Include="CyberLogo2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
+    <Exec Command="cmd.exe /c &quot;copy /Y $(TargetPath) C:\Users\Team195\Desktop\$(TargetFileName)&quot;" />
+  </Target>
 </Project>

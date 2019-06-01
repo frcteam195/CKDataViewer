@@ -14,25 +14,19 @@ namespace CKDataViewer.Utilities
 
         }
 
-        public void Add(string logItem, bool synchronized = false)
+        public void Add(string key, string value, bool synchronized = false)
         {
-            var l = logItem.Split(':');
-            if (l.Length > 1)
+            if (synchronized)
             {
-                string k = l[0];
-                string v = l[1].Split(';')[0];
-                if (synchronized)
+                lock(lockObject)
                 {
-                    lock(lockObject)
-                    {
-                        Add(k, v);
-                    }
-                }
-                else
-                {
-                    Add(k, v);
+                    base.Add(key, value);
                 }
             }
-        }
+            else
+            {
+                base.Add(key, value);
+            }
+    }
     }
 }

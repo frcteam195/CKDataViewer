@@ -297,12 +297,15 @@ namespace CKDataViewer
                                 try
                                 {
                                     CyberDictionary dataList = new CyberDictionary();
-                                    Parallel.ForEach(messageReceived.Arguments, (a) =>
-                                    {
-                                        dataList.Add(a.ToString(), true);
-                                    });
 
-                                    lock(dictionarySyncLock)
+                                    for (int i = 0; i < messageReceived.Arguments.Count; i += 2)
+                                    {
+                                        object key = messageReceived.Arguments[i];
+                                        object value = messageReceived.Arguments[i + 1];
+                                        dataList.Add(key.ToString(), value.ToString());
+                                    }
+
+                                    lock (dictionarySyncLock)
                                     {
                                         if (resyncTimer.isTimedOut()) {
                                             dataContainerDictionary.Add(dataList, true);
