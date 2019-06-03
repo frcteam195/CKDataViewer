@@ -30,7 +30,7 @@ namespace CKDataViewer
         private DispatcherTimer refreshTimer = new DispatcherTimer();
 
         private readonly DateTime programLaunchTime;
-        private static readonly int DATA_CONTAINER_SIZE = 100;
+        private static readonly int DATA_CONTAINER_SIZE = 200;
         private static readonly int CONSTRAINED_CHART_SIZE = DATA_CONTAINER_SIZE / 2;
 
         private TimeoutTimer resyncTimer = new TimeoutTimer(5);
@@ -61,7 +61,7 @@ namespace CKDataViewer
             dataContainerDictionary.ItemRemoved += DataContainerDictionary_ItemRemoved;
 
             refreshTimer.Tick += refreshTimer_Tick;
-            refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
 
             dataChart.Series.Clear();
             dataChart.Titles.Clear();
