@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKDataViewer", "CKDataViewe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKDataToolbox", "CKDataToolbox\CKDataToolbox.csproj", "{919F3145-179A-42F0-B67A-559FD71F7A9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKPIDTuner", "CKPIDTuner\CKPIDTuner.csproj", "{9611CA52-0895-4BED-BC10-C46A584EF6F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{919F3145-179A-42F0-B67A-559FD71F7A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{919F3145-179A-42F0-B67A-559FD71F7A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{919F3145-179A-42F0-B67A-559FD71F7A9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9611CA52-0895-4BED-BC10-C46A584EF6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9611CA52-0895-4BED-BC10-C46A584EF6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9611CA52-0895-4BED-BC10-C46A584EF6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9611CA52-0895-4BED-BC10-C46A584EF6F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -380,5 +380,24 @@ namespace CKDataViewer
 
             refreshTimer.Start();
         }
+
+        private void cmdPauseStart_Click(object sender, EventArgs e)
+        {
+            if (cmdPauseStart.Text == "Pause")
+            {
+                if (refreshTimer.IsEnabled)
+                {
+                    refreshTimer.Stop();
+                }
+                cmdPauseStart.Text = "Start";
+            } else
+            {
+                if (!refreshTimer.IsEnabled)
+                {
+                    refreshTimer.Start();
+                }
+                cmdPauseStart.Text = "Pause";
+            }
+        }
     }
 }
