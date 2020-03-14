@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CKDataViewer.Utilities
+namespace CKDataToolbox.Utilities
 {
     public class LogItemLabel : Label
     {

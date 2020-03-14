@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CKDataViewer.Utilities
+namespace CKDataToolbox.Utilities
 {
     public class ThreadRateControl
     {

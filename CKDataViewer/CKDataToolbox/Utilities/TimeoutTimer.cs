@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CKDataViewer.Utilities
+namespace CKDataToolbox.Utilities
 {
     public class TimeoutTimer
     {
